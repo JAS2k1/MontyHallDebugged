@@ -76,7 +76,7 @@ public class MontyHallGuessingGameExercise {
 
     public static void randomlyPlaceAPrize(int[] doors) {
         Random random = new Random();
-        int randomNumber = random.nextInt(doors.length + 1);
+        int randomNumber = random.nextInt(doors.length);
         doors[randomNumber] = 1;
     }
 
