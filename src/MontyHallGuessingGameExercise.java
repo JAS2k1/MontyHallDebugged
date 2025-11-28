@@ -37,21 +37,40 @@ public class MontyHallGuessingGameExercise {
         scanner.close();
     }
 
+    /**
+     * Switches the player's door choice to the remaining unopened door.
+     * @param playerChoice the door initially chosen by the player
+     * @param montysChoice the door opened by Monty
+     * @return the number of the remaining door
+     */
     private static int switchDoor(int playerChoice, int montysChoice) {
         for (int i = 0; i < 3; i++) {
-            if (i != playerChoice || i != montysChoice) {
+            if (i != playerChoice && i != montysChoice) {
                 return i;
             }
         }
         return playerChoice;
     }
 
+    /**
+     * Asks the player if they want to switch doors.
+     * @param scan the Scanner object to read user input
+     * @return true if the player wants to switch, false otherwise
+     */
     private static boolean playerWantsToSwitchDoor(Scanner scan) {
-        String choice = scan.nextLine().trim();
-        if (choice.equals("yes")) { return true; }
-        return false;
+        String choice = scan.nextLine().trim().toLowerCase();
+        return switch (choice) {
+            case "yes", "y" -> true;
+            default -> false;
+        };
     }
 
+    /**
+     * Monty selects a door with a goat that is not the player's choice.
+     * @param doors the array representing the doors
+     * @param playerChoice the door chosen by the player
+     * @return the door number Monty opens
+     */
     private static int montySelectsAGoat(int[] doors, int playerChoice) {
         Random random = new Random();
         int choice;
@@ -64,27 +83,39 @@ public class MontyHallGuessingGameExercise {
         }
     }
 
+    /**
+     * Determines if the player won or lost based on their final door choice.
+     * @param doors the array representing the doors
+     * @param playerChoice the player's final door choice
+     */
     private static void determineWinner(int[] doors, int playerChoice) {
-        if(doors[playerChoice] == 1) {
-            System.out.println("You won!");
-        }
-        else {
-            System.out.println("You got the goat! :(");
+        switch (doors[playerChoice]) {
+            case 1 -> System.out.println("You won!");
+            default -> System.out.println("You got the goat! :(");
         }
     }
 
 
+    /**
+     * Randomly places a prize behind one of the doors.
+     * @param doors the array representing the doors
+     */
     public static void randomlyPlaceAPrize(int[] doors) {
         Random random = new Random();
         int randomNumber = random.nextInt(doors.length);
         doors[randomNumber] = 1;
     }
 
+    /**
+     * Opens a door and displays what is behind it.
+     * @param n the door number to open
+     * @param doors the array representing the doors
+     */
     public static void openDoor(int n, int[] doors) {
-        String contains;
-        if (doors[n] == 0) { contains = "goat"; }
-        else { contains = "prize"; }
-
+        String contains = switch (doors[n]) {
+            case 0 -> "goat";
+            default -> "prize";
+        };
         System.out.println("Monty opens door " + n + " and shows you a " + contains);
     }
 }
