@@ -81,9 +81,9 @@ public class MontyHallGuessingGameExercise {
     }
 
     public static void openDoor(int n, int[] doors) {
-        String contains = "";
+        String contains;
         if (doors[n] == 0) { contains = "goat"; }
-        else { contains = "prize"; };
+        else { contains = "prize"; }
 
         System.out.println("Monty opens door " + n + " and shows you a " + contains);
     }
